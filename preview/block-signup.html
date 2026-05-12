@@ -1,0 +1,279 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../styles/components.css">
+<style>
+  body { padding: 0; }
+  .card { width: 700px; padding: 0; gap: 0; }
+  .bk {
+    display: flex;
+    background: var(--bg1);
+    border: 1px solid var(--border-1);
+    border-radius: 10px;
+    overflow: hidden;
+    height: 600px;
+  }
+
+  /* LEFT — form */
+  .form-col {
+    flex: 1.1;
+    padding: 36px 40px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg1);
+  }
+  .form { width: 100%; max-width: 280px; display: flex; flex-direction: column; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; }
+  .brand img { width: 22px; height: 22px; object-fit: contain; }
+  .brand span { font-size: 13.5px; font-weight: 600; color: var(--fg1); letter-spacing: -0.005em; }
+
+  .heading h1 { font-size: 20px; font-weight: 600; color: var(--fg1); letter-spacing: -0.015em; margin: 0 0 4px; line-height: 1.2; }
+  .heading p { font-size: 12px; color: var(--fg3); margin: 0; }
+
+  .oauth {
+    height: 34px;
+    border: 1px solid var(--border-2); border-radius: 6px;
+    background: var(--bg2); color: var(--fg1);
+    font-size: 12.5px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; font-family: var(--font-sans);
+  }
+  .oauth svg { width: 14px; height: 14px; }
+
+  .divider { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 9.5px; color: var(--fg3); text-transform: uppercase; letter-spacing: 0.08em; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border-1); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .fld { display: flex; flex-direction: column; gap: 4px; }
+  .fld label { font-size: 11px; color: var(--fg2); font-weight: 500; }
+  .fld input {
+    height: 32px; padding: 0 10px;
+    border: 1px solid var(--border-2); border-radius: 5px;
+    background: var(--bg2); color: var(--fg1);
+    font-size: 12px; font-family: var(--font-sans);
+  }
+  .fld input:focus { outline: none; border-color: var(--accent); }
+  .fld .hint { font-size: 10px; color: var(--fg3); margin-top: 1px; font-family: var(--font-mono); }
+
+  .check { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--fg2); }
+  .check__box { width: 14px; height: 14px; border: 1px solid var(--accent); border-radius: 3px; background: var(--accent); display: flex; align-items: center; justify-content: center; flex: none; }
+  .check__box svg { width: 9px; height: 9px; color: #fff; }
+  .check a { color: var(--fg1); text-decoration: underline; }
+
+  .submit {
+    height: 36px;
+    background: var(--accent); color: var(--accent-on);
+    border: 0; border-radius: 6px;
+    font-size: 13px; font-weight: 500;
+    font-family: var(--font-sans);
+    box-shadow: var(--shadow-cta);
+    cursor: pointer; margin-top: 2px;
+  }
+  .login-link { font-size: 11.5px; color: var(--fg3); text-align: center; margin-top: 4px; }
+  .login-link a { color: var(--fg1); text-decoration: underline; }
+
+  /* RIGHT — dark tech panel */
+  .side {
+    flex: 0.9;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    border-left: 1px solid var(--border-1);
+    background: oklch(16% 0.03 268);
+  }
+  /* base radial wash */
+  .side__bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 80% 100%, rgba(99,102,241,0.28), transparent 60%),
+      radial-gradient(ellipse 60% 45% at 20% 0%, rgba(168,85,247,0.14), transparent 65%),
+      linear-gradient(155deg, oklch(20% 0.04 270) 0%, oklch(13% 0.03 268) 100%);
+  }
+  /* dot grid */
+  .side__dots {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.09) 1px, transparent 1px);
+    background-size: 14px 14px;
+    background-position: 0 0;
+    mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, #000 0%, transparent 85%);
+  }
+  /* scan lines */
+  .side__scan {
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.025) 0px,
+      rgba(255,255,255,0.025) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+    mix-blend-mode: overlay;
+  }
+  /* corner glyph - hairline circuit lines */
+  .side__circuit {
+    position: absolute;
+    top: 0; right: 0;
+    width: 180px; height: 180px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  /* top status chip area */
+  .side__inner {
+    position: relative; height: 100%;
+    padding: 28px 28px 30px;
+    display: flex; flex-direction: column;
+    gap: 16px;
+  }
+  .side__chip {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 10px 4px 8px;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(6px);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+  }
+  .side__chip-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: oklch(75% 0.18 145);
+    box-shadow: 0 0 0 2px rgba(34,197,94,0.18), 0 0 8px oklch(75% 0.18 145);
+  }
+  .side__hd {
+    font-family: var(--font-mono);
+    font-size: 9.5px; opacity: 0.5;
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .side__list {
+    display: flex; flex-direction: column; gap: 14px;
+    flex: 1;
+  }
+  .feat { display: flex; gap: 11px; align-items: flex-start; }
+  .feat__ic {
+    width: 24px; height: 24px; flex: none;
+    border-radius: 6px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+    border: 1px solid rgba(255,255,255,0.14);
+    color: oklch(85% 0.13 270);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 4px 12px rgba(99,102,241,0.18);
+  }
+  .feat__ic svg { width: 12px; height: 12px; }
+  .feat__t { font-size: 12.5px; font-weight: 500; line-height: 1.25; color: #fff; }
+  .feat__d { font-size: 11px; opacity: 0.6; margin-top: 2px; line-height: 1.4; font-family: var(--font-mono); letter-spacing: 0.01em; }
+
+  .side__quote {
+    position: relative;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 14px;
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.92;
+  }
+  .side__who {
+    font-family: var(--font-mono);
+    font-size: 9.5px; opacity: 0.5;
+    margin-top: 8px;
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+<div class="card"><div class="bk">
+
+  <!-- LEFT — form -->
+  <div class="form-col">
+    <form class="form" onsubmit="return false">
+      <div class="brand">
+        <img src="toms-logo.png" alt="TOMS">
+        <span>TOMS</span>
+      </div>
+
+      <div class="heading">
+        <h1>Create your account</h1>
+        <p>Start with a 30-day trial · no card required</p>
+      </div>
+
+      <button class="oauth" type="button">
+        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.9c-.3 1.4-1 2.5-2.2 3.3v2.7h3.5c2-1.9 3.3-4.6 3.3-7.8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.5-2.7c-1 .7-2.3 1.1-3.8 1.1-2.9 0-5.4-2-6.3-4.6H2v2.8C3.8 20.5 7.6 23 12 23z"/><path fill="#FBBC05" d="M5.7 14.1c-.2-.7-.4-1.4-.4-2.1s.1-1.4.4-2.1V7.1H2C1.2 8.6.8 10.3.8 12s.4 3.4 1.2 4.9l3.7-2.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3 .6 4.2 1.7l3.1-3.1C17.5 2.1 15 1 12 1 7.6 1 3.8 3.5 2 7.1l3.7 2.8c.9-2.6 3.4-4.5 6.3-4.5z"/></svg>
+        Continue with Google
+      </button>
+
+      <div class="divider">or</div>
+
+      <div class="grid2">
+        <div class="fld"><label>First name</label><input value="Elena"></div>
+        <div class="fld"><label>Last name</label><input value="Costa"></div>
+      </div>
+      <div class="fld"><label>Work email</label><input type="email" value="elena@brewco.coffee"></div>
+      <div class="fld">
+        <label>Password</label>
+        <input type="password" value="••••••••••">
+        <span class="hint">Min 12 chars · 1 number · 1 symbol</span>
+      </div>
+
+      <label class="check">
+        <span class="check__box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5 5 9l4.5-5"/></svg></span>
+        I agree to the <a>Terms</a>
+      </label>
+
+      <button class="submit" type="submit">Create account</button>
+
+      <div class="login-link">Already have an account? <a>Log in</a></div>
+    </form>
+  </div>
+
+  <!-- RIGHT — dark side panel -->
+  <div class="side">
+    <div class="side__bg"></div>
+    <div class="side__dots"></div>
+    <div class="side__scan"></div>
+    <svg class="side__circuit" viewBox="0 0 180 180" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.6">
+      <path d="M0 24 H110 L130 44 H180" />
+      <path d="M0 60 H72 L92 80 H180" />
+      <path d="M0 96 H40 L60 116 H180" />
+      <circle cx="110" cy="24" r="2.2" fill="rgba(168,85,247,0.6)" stroke="none"/>
+      <circle cx="72" cy="60" r="2.2" fill="rgba(99,102,241,0.6)" stroke="none"/>
+      <circle cx="40" cy="96" r="2.2" fill="rgba(99,102,241,0.6)" stroke="none"/>
+      <circle cx="130" cy="44" r="1.5" fill="rgba(255,255,255,0.4)" stroke="none"/>
+      <circle cx="92" cy="80" r="1.5" fill="rgba(255,255,255,0.4)" stroke="none"/>
+    </svg>
+    <div class="side__inner">
+      <div class="side__chip"><span class="side__chip-dot"></span>Live · 12,840 terminals</div>
+      <div class="side__hd">What you get</div>
+      <div class="side__list">
+        <div class="feat">
+          <span class="feat__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>
+          <div><div class="feat__t">Unlimited terminals</div><div class="feat__d">Manage your full fleet from day one</div></div>
+        </div>
+        <div class="feat">
+          <span class="feat__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>
+          <div><div class="feat__t">Real-time monitoring</div><div class="feat__d">Live status, alerts, remote diagnostics</div></div>
+        </div>
+        <div class="feat">
+          <span class="feat__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>
+          <div><div class="feat__t">Push firmware updates</div><div class="feat__d">Stage and roll out in minutes, not weeks</div></div>
+        </div>
+        <div class="feat">
+          <span class="feat__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg></span>
+          <div><div class="feat__t">SOC 2 + PCI-DSS</div><div class="feat__d">Compliant from your first transaction</div></div>
+        </div>
+      </div>
+      <div class="side__quote">
+        "We rolled out 480 terminals across 12 cities in two weeks."
+        <div class="side__who">— BREW & CO · OPS LEAD</div>
+      </div>
+    </div>
+  </div>
+
+</div></div>
+</body>
+</html>

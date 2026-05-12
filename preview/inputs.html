@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="_card.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <style>
+    .ic { width: 16px; height: 16px; flex: none; }
+    .ic--sm { width: 14px; height: 14px; }
+    .clear-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--bg3); color: var(--fg2);
+      border: 0; cursor: pointer;
+    }
+    .clear-btn:hover { background: var(--border-2); color: var(--fg1); }
+    kbd {
+      font-family: var(--font-mono); font-size: 10.5px;
+      padding: 1px 5px;
+      border: 1px solid var(--border-2);
+      border-radius: 3px;
+      background: var(--bg1);
+      color: var(--fg2);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <!-- Featured search input — full width, prominent -->
+    <label class="tds-field">
+      <span class="tds-field__label">Search</span>
+      <span class="tds-input tds-input--md" style="width:100%">
+        <span class="tds-input__addon tds-input__addon--prefix" style="color:var(--fg3)">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4-4"/>
+          </svg>
+        </span>
+        <input class="tds-input__el" value="NL750" />
+        <span class="tds-input__addon tds-input__addon--suffix" style="display:flex;gap:6px;align-items:center">
+          <button class="clear-btn" type="button" aria-label="Clear">
+            <svg class="ic--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 6 12 12"/><path d="m18 6-12 12"/></svg>
+          </button>
+          <kbd>⌘K</kbd>
+        </span>
+      </span>
+      <span class="tds-field__hint">Filters terminals, stores, and merchants. <strong style="color:var(--fg2);font-weight:500">3 matches</strong></span>
+    </label>
+
+    <div class="grid-2">
+      <label class="tds-field">
+        <span class="tds-field__label">Terminal alias</span>
+        <span class="tds-input tds-input--md">
+          <input class="tds-input__el" placeholder="NL750-K9F2H7B3" />
+        </span>
+        <span class="tds-field__hint">12 characters max · alphanumeric</span>
+      </label>
+
+      <label class="tds-field">
+        <span class="tds-field__label tds-field__label--required">Merchant</span>
+        <span class="tds-select tds-select--md">
+          <select><option>Acme Coffee · MTL Store #4</option></select>
+          <svg class="tds-select__chevron ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </label>
+
+      <label class="tds-field">
+        <span class="tds-field__label">IMEI</span>
+        <span class="tds-input tds-input--md tds-input--invalid">
+          <input class="tds-input__el" value="35178802" />
+          <span class="tds-input__addon tds-input__addon--suffix" style="color:var(--error)">
+            <svg class="ic--sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.5" r=".7" fill="currentColor"/>
+            </svg>
+          </span>
+        </span>
+        <span class="tds-field__error">IMEI must be 15 digits</span>
+      </label>
+
+      <label class="tds-field">
+        <span class="tds-field__label">Amount</span>
+        <span class="tds-input tds-input--md">
+          <span class="tds-input__addon tds-input__addon--prefix" style="color:var(--fg3);font-family:var(--font-mono);font-size:12px">$</span>
+          <input class="tds-input__el" value="248.00" />
+          <span class="tds-input__addon tds-input__addon--suffix" style="color:var(--fg3);font-family:var(--font-mono);font-size:11px">CAD</span>
+        </span>
+      </label>
+    </div>
+
+  </div>
+</body>
+</html>

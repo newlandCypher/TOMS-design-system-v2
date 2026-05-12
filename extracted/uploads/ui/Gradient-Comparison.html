@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>渐变方案对比 · TOMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;450;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  html, body { margin: 0; }
+  body {
+    background: var(--bg-app);
+    color: var(--fg-primary);
+    font-family: "Geist", system-ui, sans-serif;
+    padding: 56px 48px 80px;
+    min-height: 100vh;
+  }
+  .page-head { max-width: 1280px; margin: 0 auto 40px; }
+  .page-head .eyebrow {
+    font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--fg-tertiary); margin-bottom: 8px;
+  }
+  .page-head h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 12px; }
+  .page-head p { font-size: 14.5px; color: var(--fg-secondary); margin: 0; max-width: 720px; line-height: 1.6; }
+
+  .grid {
+    max-width: 1280px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+
+  .card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .card-head {
+    padding: 22px 24px 18px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .card-tag {
+    display: inline-block;
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--fg-tertiary); margin-bottom: 10px; letter-spacing: 0.04em;
+  }
+  .card-title { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 8px; }
+  .card-desc { font-size: 13px; color: var(--fg-secondary); margin: 0; line-height: 1.55; }
+
+  .stage {
+    background: var(--bg-sunken);
+    padding: 28px 24px;
+    display: flex; flex-direction: column; gap: 16px;
+    flex: 1;
+  }
+
+  /* mini sidebar header */
+  .mini {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .mini .logo {
+    width: 22px; height: 22px; border-radius: 5px;
+    display: grid; place-items: center;
+    color: white; font-weight: 700; font-size: 11px; letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+  .mini .word { font-weight: 700; font-size: 14px; letter-spacing: -0.01em; }
+  .mini .org {
+    margin-left: auto; font-size: 11px; color: var(--fg-tertiary);
+    padding: 2px 6px; background: var(--bg-sunken);
+    border: 1px solid var(--border-subtle); border-radius: 4px;
+  }
+
+  /* primary button row */
+  .btn-row { display: flex; align-items: center; gap: 10px; padding: 0 2px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 12px; border-radius: 6px;
+    font-size: 13px; font-weight: 500; font-family: inherit;
+    border: 1px solid var(--border-default);
+    background: var(--bg-surface); color: var(--fg-primary);
+    cursor: pointer; box-shadow: var(--shadow-xs);
+  }
+  .btn.primary {
+    border-color: transparent; color: var(--fg-on-accent);
+    box-shadow: 0 1px 0 oklch(0% 0 0 / .08);
+  }
+
+  /* avatar row */
+  .avatar-row {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    color: white; display: grid; place-items: center;
+    font-size: 11px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .avatar-row .name { font-size: 13px; font-weight: 500; }
+  .avatar-row .role { font-size: 11px; color: var(--fg-tertiary); margin-top: 1px; }
+  .avatar-row .meta { flex: 1; }
+
+  /* accent soft banner */
+  .banner {
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .banner .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .banner .copy { flex: 1; }
+  .banner .copy-title { font-size: 13px; font-weight: 500; }
+  .banner .copy-sub { font-size: 12px; color: var(--fg-secondary); margin-top: 2px; }
+
+  /* notes */
+  .notes {
+    padding: 18px 24px 22px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex; flex-direction: column; gap: 8px;
+    background: var(--bg-surface);
+  }
+  .note {
+    display: flex; gap: 8px;
+    font-size: 12.5px; color: var(--fg-secondary); line-height: 1.55;
+  }
+  .note .glyph {
+    flex-shrink: 0; width: 14px; height: 14px;
+    color: var(--fg-tertiary); margin-top: 2px;
+  }
+  .note .glyph svg { display: block; }
+
+  .swatch-strip {
+    display: flex; gap: 0; height: 28px;
+    border-radius: 6px; overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    margin-top: 4px;
+  }
+  .swatch-strip > div { flex: 1; }
+
+  /* ─── Variant A: Solid graphite ─────────────────────────── */
+  [data-variant="a"] .logo { background: oklch(28% 0.02 270); }
+  [data-variant="a"] .word {
+    background: linear-gradient(180deg, oklch(28% 0.02 270), oklch(20% 0.015 270));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  [data-variant="a"] .btn.primary {
+    background: oklch(22% 0.015 270);
+  }
+  [data-variant="a"] .avatar { background: oklch(28% 0.02 270); }
+  [data-variant="a"] .banner {
+    background: oklch(97% 0.004 90);
+    border-color: oklch(91% 0.005 90);
+  }
+  [data-variant="a"] .banner .dot { background: oklch(28% 0.02 270); }
+  [data-variant="a"] .swatch-a-1 { background: oklch(20% 0.015 270); }
+  [data-variant="a"] .swatch-a-2 { background: oklch(28% 0.02 270); }
+  [data-variant="a"] .swatch-a-3 { background: oklch(38% 0.015 270); }
+  [data-variant="a"] .swatch-a-4 { background: oklch(60% 0.01 270); }
+  [data-variant="a"] .swatch-a-5 { background: oklch(85% 0.005 270); }
+
+  /* ─── Variant B: Mono brand + indigo CTA ───────────────── */
+  [data-variant="b"] .logo {
+    background: linear-gradient(180deg, oklch(22% 0.015 270), oklch(14% 0.01 270));
+  }
+  [data-variant="b"] .word { color: var(--fg-primary); }
+  [data-variant="b"] .btn.primary {
+    background: oklch(46% 0.18 268);
+  }
+  [data-variant="b"] .avatar {
+    background: oklch(45% 0.04 270);
+  }
+  [data-variant="b"] .banner {
+    background: oklch(97.5% 0.014 268);
+    border-color: oklch(91% 0.025 268);
+  }
+  [data-variant="b"] .banner .dot { background: oklch(48% 0.18 268); }
+  [data-variant="b"] .swatch-b-1 { background: oklch(14% 0.01 270); }
+  [data-variant="b"] .swatch-b-2 { background: oklch(46% 0.18 268); }
+  [data-variant="b"] .swatch-b-3 { background: oklch(60% 0.14 268); }
+  [data-variant="b"] .swatch-b-4 { background: oklch(82% 0.06 268); }
+  [data-variant="b"] .swatch-b-5 { background: oklch(95% 0.018 268); }
+
+  /* ─── Variant C: Muted dusty gradient ──────────────────── */
+  [data-variant="c"] .logo {
+    background: linear-gradient(135deg, oklch(38% 0.07 270), oklch(28% 0.04 290));
+  }
+  [data-variant="c"] .word {
+    background: linear-gradient(95deg, oklch(38% 0.08 270), oklch(28% 0.05 290));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  [data-variant="c"] .btn.primary {
+    background: linear-gradient(135deg, oklch(40% 0.10 268) 0%, oklch(32% 0.08 282) 100%);
+  }
+  [data-variant="c"] .avatar {
+    background: linear-gradient(135deg, oklch(38% 0.08 270), oklch(28% 0.05 290));
+  }
+  [data-variant="c"] .banner {
+    background: linear-gradient(95deg, oklch(97% 0.012 270) 0%, oklch(96% 0.014 290) 100%);
+    border-color: oklch(91% 0.02 278);
+  }
+  [data-variant="c"] .banner .dot {
+    background: linear-gradient(135deg, oklch(45% 0.12 268), oklch(35% 0.08 290));
+  }
+  [data-variant="c"] .swatch-c-1 { background: oklch(28% 0.05 290); }
+  [data-variant="c"] .swatch-c-2 { background: oklch(34% 0.07 280); }
+  [data-variant="c"] .swatch-c-3 { background: oklch(40% 0.10 270); }
+  [data-variant="c"] .swatch-c-4 { background: oklch(70% 0.06 275); }
+  [data-variant="c"] .swatch-c-5 { background: oklch(94% 0.015 280); }
+
+  /* ─── For reference: current "before" sliver ──────────── */
+  .before {
+    max-width: 1280px; margin: 0 auto 32px;
+    display: flex; align-items: center; gap: 20px;
+    padding: 16px 20px;
+    background: var(--bg-surface);
+    border: 1px dashed var(--border-default);
+    border-radius: 12px;
+  }
+  .before .label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--fg-tertiary); flex-shrink: 0;
+  }
+  .before .swatch {
+    height: 28px; width: 240px;
+    background: linear-gradient(95deg, #4a6cd9 0%, #4a3fe0 55%, #5562f5 100%);
+    border-radius: 6px;
+  }
+  .before .word-current {
+    font-weight: 700; font-size: 18px; letter-spacing: -0.01em;
+    background: linear-gradient(95deg, #4a6cd9 0%, #4a3fe0 55%, #5562f5 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .before .commentary {
+    font-size: 13px; color: var(--fg-secondary);
+  }
+
+  .pros-cons {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    padding: 18px 24px 22px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .pros-cons .col h4 {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; margin: 0 0 8px; color: var(--fg-tertiary);
+  }
+  .pros-cons .col ul {
+    margin: 0; padding-left: 14px; font-size: 12.5px; color: var(--fg-secondary);
+    line-height: 1.6;
+  }
+  .pros-cons .pros h4 { color: oklch(50% 0.12 152); }
+  .pros-cons .cons h4 { color: oklch(55% 0.14 30); }
+
+  .footnote {
+    max-width: 1280px; margin: 40px auto 0;
+    padding: 20px 24px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 12px;
+    font-size: 13px; color: var(--fg-secondary); line-height: 1.65;
+  }
+  .footnote strong { color: var(--fg-primary); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <div class="eyebrow">视觉对比 · Brand surfaces</div>
+  <h1>蓝渐变替代方案 — 3 个方向</h1>
+  <p>当前方案使用 <code style="font-family:var(--font-mono);font-size:13px;background:var(--bg-sunken);padding:1px 6px;border-radius:4px;border:1px solid var(--border-subtle);">#4a6cd9 → #4a3fe0 → #5562f5</code> 的蓝紫渐变。即使收敛后，亮度仍会把视线从内容上拉走。下面是 3 个降低注意力消耗的方向，每个方向都展示同一组关键品牌界面：侧栏 logo、主操作按钮、用户头像、轻强调横幅。</p>
+</div>
+
+<div class="before">
+  <span class="label">CURRENT</span>
+  <div class="swatch"></div>
+  <span class="word-current">TOMS</span>
+  <span class="commentary">蓝紫渐变 — 视觉抢眼，但在中性灰底上偏跳脱。</span>
+</div>
+
+<div class="grid">
+
+  <!-- ─── Variant A ─────────────────────────────────────── -->
+  <div class="card" data-variant="a">
+    <div class="card-head">
+      <div class="card-tag">A · 石墨单色</div>
+      <h3 class="card-title">SOLID GRAPHITE</h3>
+      <p class="card-desc">完全去掉渐变与彩色，全部品牌面用近黑灰。最克制，让内容（KPI、状态、表格）成为页面唯一的颜色发声方。</p>
+    </div>
+    <div class="stage">
+      <div class="mini">
+        <div class="logo">T</div>
+        <span class="word">TOMS</span>
+        <span class="org">Acme&nbsp;Coffee</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn primary">Save changes</button>
+        <button class="btn">Cancel</button>
+      </div>
+      <div class="avatar-row">
+        <div class="avatar">EC</div>
+        <div class="meta">
+          <div class="name">Elena Costa</div>
+          <div class="role">Admin · TOMS</div>
+        </div>
+      </div>
+      <div class="banner">
+        <div class="dot"></div>
+        <div class="copy">
+          <div class="copy-title">Firmware 2.4.1 available</div>
+          <div class="copy-sub">Schedule rollout from App &amp; Firmware tab.</div>
+        </div>
+      </div>
+      <div class="swatch-strip">
+        <div class="swatch-a-1"></div><div class="swatch-a-2"></div>
+        <div class="swatch-a-3"></div><div class="swatch-a-4"></div>
+        <div class="swatch-a-5"></div>
+      </div>
+    </div>
+    <div class="pros-cons">
+      <div class="col pros">
+        <h4>优点</h4>
+        <ul>
+          <li>视觉噪音最低</li>
+          <li>把彩色让给状态色（成功/警告/危险）</li>
+          <li>打印 / 截屏 / 黑白都好看</li>
+        </ul>
+      </div>
+      <div class="col cons">
+        <h4>取舍</h4>
+        <ul>
+          <li>品牌识别度变弱，TOMS 不再"有色彩"</li>
+          <li>主按钮和次按钮对比仅靠明度</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Variant B ─────────────────────────────────────── -->
+  <div class="card" data-variant="b">
+    <div class="card-head">
+      <div class="card-tag">B · 中性品牌 + 单色靛蓝 CTA</div>
+      <h3 class="card-title">NEUTRAL BRAND, SOLID CTA</h3>
+      <p class="card-desc">Logo / 头像变中性灰，但 <strong>主操作按钮</strong>保留单色靛蓝（去掉渐变）。让"重点放在用户该点的地方"，而不是 logo 上。</p>
+    </div>
+    <div class="stage">
+      <div class="mini">
+        <div class="logo">T</div>
+        <span class="word">TOMS</span>
+        <span class="org">Acme&nbsp;Coffee</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn primary">Save changes</button>
+        <button class="btn">Cancel</button>
+      </div>
+      <div class="avatar-row">
+        <div class="avatar">EC</div>
+        <div class="meta">
+          <div class="name">Elena Costa</div>
+          <div class="role">Admin · TOMS</div>
+        </div>
+      </div>
+      <div class="banner">
+        <div class="dot"></div>
+        <div class="copy">
+          <div class="copy-title">Firmware 2.4.1 available</div>
+          <div class="copy-sub">Schedule rollout from App &amp; Firmware tab.</div>
+        </div>
+      </div>
+      <div class="swatch-strip">
+        <div class="swatch-b-1"></div><div class="swatch-b-2"></div>
+        <div class="swatch-b-3"></div><div class="swatch-b-4"></div>
+        <div class="swatch-b-5"></div>
+      </div>
+    </div>
+    <div class="pros-cons">
+      <div class="col pros">
+        <h4>优点</h4>
+        <ul>
+          <li>主 CTA 仍清晰可点，强调按钮而非 logo</li>
+          <li>渐变完全去掉，不再"亮"</li>
+          <li>和 Linear / Vercel / Notion 视觉语言一致</li>
+        </ul>
+      </div>
+      <div class="col cons">
+        <h4>取舍</h4>
+        <ul>
+          <li>品牌色"声量"减少 ~70%</li>
+          <li>页面上品牌色只剩按钮一处</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Variant C ─────────────────────────────────────── -->
+  <div class="card" data-variant="c">
+    <div class="card-head">
+      <div class="card-tag">C · 哑光深紫渐变</div>
+      <h3 class="card-title">MUTED DUSK GRADIENT</h3>
+      <p class="card-desc">保留渐变的"运动感"，但大幅降低饱和度和明度。从亮蓝→紫，改为深紫→灰紫，类似哑光金属。仍然有渐变，但不再"发光"。</p>
+    </div>
+    <div class="stage">
+      <div class="mini">
+        <div class="logo">T</div>
+        <span class="word">TOMS</span>
+        <span class="org">Acme&nbsp;Coffee</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn primary">Save changes</button>
+        <button class="btn">Cancel</button>
+      </div>
+      <div class="avatar-row">
+        <div class="avatar">EC</div>
+        <div class="meta">
+          <div class="name">Elena Costa</div>
+          <div class="role">Admin · TOMS</div>
+        </div>
+      </div>
+      <div class="banner">
+        <div class="dot"></div>
+        <div class="copy">
+          <div class="copy-title">Firmware 2.4.1 available</div>
+          <div class="copy-sub">Schedule rollout from App &amp; Firmware tab.</div>
+        </div>
+      </div>
+      <div class="swatch-strip">
+        <div class="swatch-c-1"></div><div class="swatch-c-2"></div>
+        <div class="swatch-c-3"></div><div class="swatch-c-4"></div>
+        <div class="swatch-c-5"></div>
+      </div>
+    </div>
+    <div class="pros-cons">
+      <div class="col pros">
+        <h4>优点</h4>
+        <ul>
+          <li>保留品牌的"渐变 DNA"</li>
+          <li>不再亮蓝、不再抢镜</li>
+          <li>暗色模式天然适配</li>
+        </ul>
+      </div>
+      <div class="col cons">
+        <h4>取舍</h4>
+        <ul>
+          <li>仍是"花活"，不如 A/B 克制</li>
+          <li>低饱和度小尺寸下接近纯黑</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footnote">
+  <strong>我的建议：B（中性品牌 + 单色靛蓝 CTA）</strong>。它是最稳的工程化路径 —— logo 安静、CTA 仍然能引导用户、渐变彻底去掉，不会再"发光"。如果还是希望保留品牌的渐变质感，C 是最优雅的折中。A 适合你打算把整个产品向"无色"系统（如金融 / 政府 / 极简工具）靠拢的场景。<br><br>
+  确定方向后，我可以直接套到主文件里，并把改动写进 <code style="font-family:var(--font-mono);font-size:12.5px;background:var(--bg-sunken);padding:1px 5px;border-radius:4px;border:1px solid var(--border-subtle);">tokens.css</code> 的 <code style="font-family:var(--font-mono);font-size:12.5px;background:var(--bg-sunken);padding:1px 5px;border-radius:4px;border:1px solid var(--border-subtle);">--accent-gradient</code>。
+</div>
+
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>TOMS Design System — Showcase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../tokens/tokens.css" />
+<link rel="stylesheet" href="../styles/components.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--color-bg-1); color: var(--color-text-primary);
+    font-family: var(--font-family-sans); font-size: var(--font-size-md); }
+  .sb-shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .sb-side { background: var(--color-bg-3); border-right: 1px solid var(--color-border-default);
+    padding: var(--space-6) var(--space-4); position: sticky; top: 0; height: 100vh; overflow: auto; }
+  .sb-brand { font-weight: 600; font-size: var(--font-size-lg); letter-spacing: -0.02em;
+    margin-bottom: var(--space-4); color: var(--color-brand-mono-strong); display:flex; align-items:center; gap:8px; }
+  .sb-brand__dot { width: 22px; height: 22px; border-radius: 6px; background: var(--color-brand-mono-strong); display:inline-block; }
+  .sb-nav { display: flex; flex-direction: column; gap: 2px; }
+  .sb-nav a { color: var(--color-text-secondary); text-decoration: none; padding: 6px 10px;
+    border-radius: var(--radius-md); font-size: var(--font-size-sm); }
+  .sb-nav a:hover { background: var(--color-bg-hover); color: var(--color-text-primary); }
+  .sb-main { padding: var(--space-8) var(--space-10); max-width: 1280px; }
+  .sb-h1 { font-size: var(--font-size-3xl); font-weight: 600; letter-spacing: -0.02em;
+    margin: 0 0 var(--space-2); color: var(--color-text-primary); }
+  .sb-lede { color: var(--color-text-secondary); margin: 0 0 var(--space-8); }
+  .sb-section { margin-bottom: var(--space-12); }
+  .sb-section h2 { font-size: var(--font-size-xl); font-weight: 600; margin: 0 0 var(--space-2);
+    letter-spacing: -0.015em; }
+  .sb-section h3 { font-size: var(--font-size-md); font-weight: 600; color: var(--color-text-secondary);
+    margin: var(--space-6) 0 var(--space-3); }
+  .sb-section p { color: var(--color-text-secondary); margin: 0 0 var(--space-4); max-width: 70ch; }
+  .sb-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+  .sb-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); }
+  .sb-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-3); }
+  .sb-swatch { display:flex; flex-direction:column; gap:6px; }
+  .sb-swatch__chip { height: 56px; border-radius: var(--radius-lg); border: 1px solid var(--color-border-subtle); }
+  .sb-swatch__name { font-size: var(--font-size-xs); color: var(--color-text-secondary); font-family: var(--font-family-mono); }
+  .sb-tokenrow { display:grid; grid-template-columns: 24px 1fr auto; gap: var(--space-3); align-items: center;
+    padding: 8px 12px; border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); }
+  .sb-tokenrow code { font-family: var(--font-family-mono); font-size: var(--font-size-xs); color: var(--color-text-secondary); }
+  .sb-toggle { display:flex; gap: var(--space-2); align-items: center; padding: 6px 10px;
+    background: var(--color-bg-2); border: 1px solid var(--color-border-default); border-radius: var(--radius-md); }
+  .sb-topbar { display:flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-8); }
+  .sb-pill { display:inline-flex; align-items:center; gap:6px; height: 22px; padding: 0 10px;
+    background: var(--color-bg-3); border: 1px solid var(--color-border-default); border-radius: var(--radius-full);
+    font-size: var(--font-size-xs); color: var(--color-text-secondary); font-family: var(--font-family-mono); }
+  /* Demo helpers */
+  .demo-card { background: var(--color-bg-2); border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-xl); padding: var(--space-6); }
+  .demo-grid { display:grid; grid-template-columns: 120px 1fr; gap: var(--space-3) var(--space-4); align-items:center; }
+  .demo-grid > .label { font-size: var(--font-size-xs); color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.04em; }
+  .type-row { display: grid; grid-template-columns: 80px 1fr 1fr; gap: var(--space-4); align-items: baseline;
+    padding: var(--space-2) 0; border-bottom: 1px dashed var(--color-border-subtle); }
+  .type-row .name { font-family: var(--font-family-mono); font-size: var(--font-size-xs); color: var(--color-text-tertiary); }
+</style>
+</head>
+<body>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<div id="root"></div>
+
+<script type="text/babel" src="components.jsx"></script>
+<script type="text/babel">
+  const { useState } = React;
+
+  /* ─── Page ─────────────────────────────────────────── */
+  function App() {
+    const [theme, setTheme] = useState('light');
+    React.useEffect(() => { document.documentElement.dataset.theme = theme; }, [theme]);
+    return (
+      <ToastProvider>
+        <div className="sb-shell">
+          <Side />
+          <main className="sb-main">
+            <div className="sb-topbar">
+              <div>
+                <h1 className="sb-h1">TOMS Design System</h1>
+                <p className="sb-lede">v1.0 · Tokens + React/TS components · Built for B-end SaaS dashboards.</p>
+              </div>
+              <div className="sb-toggle">
+                <span style={{fontSize:'var(--font-size-xs)', color:'var(--color-text-tertiary)'}}>Theme</span>
+                <Switch checked={theme === 'dark'} onChange={(v) => setTheme(v ? 'dark' : 'light')} aria-label="Toggle dark theme" />
+                <span style={{fontSize:'var(--font-size-xs)', color:'var(--color-text-secondary)'}}>{theme}</span>
+              </div>
+            </div>
+            <ColorsSection />
+            <TypeSection />
+            <SpacingSection />
+            <ShadowSection />
+            <ButtonSection />
+            <FormSection />
+            <DataSection />
+            <FeedbackSection />
+          </main>
+        </div>
+      </ToastProvider>
+    );
+  }
+
+  function Side() {
+    const items = [
+      ['#colors','Colors'], ['#type','Typography'], ['#spacing','Spacing & Radius'],
+      ['#shadow','Shadow & Elevation'], ['#button','Button'], ['#form','Form'],
+      ['#data','Data display'], ['#feedback','Feedback'],
+    ];
+    return (
+      <aside className="sb-side">
+        <div className="sb-brand"><span className="sb-brand__dot" />TOMS · DS</div>
+        <nav className="sb-nav">{items.map(([h,l]) => <a key={h} href={h}>{l}</a>)}</nav>
+        <div style={{marginTop:24}}><span className="sb-pill">v1.0</span></div>
+      </aside>
+    );
+  }
+
+  /* ─── Colors ───────────────────────────────────────── */
+  const Swatch = ({ name, varName }) => (
+    <div className="sb-swatch">
+      <div className="sb-swatch__chip" style={{ background: `var(${varName})` }} />
+      <div className="sb-swatch__name">{name}</div>
+    </div>
+  );
+  function ColorsSection() {
+    const primary = [50,100,200,300,400,500,600,700,800,900].map(n => [`primary-${n}`, `--color-primary-${n}`]);
+    const semantic = [
+      ['success','--color-success-500'], ['warning','--color-warning-500'],
+      ['error','--color-error-500'], ['info','--color-info-500'],
+    ];
+    const surface = [
+      ['bg-1','--color-bg-1'], ['bg-2','--color-bg-2'], ['bg-3','--color-bg-3'],
+      ['bg-hover','--color-bg-hover'], ['bg-active','--color-bg-active'],
+    ];
+    const text = [
+      ['primary','--color-text-primary'], ['secondary','--color-text-secondary'],
+      ['tertiary','--color-text-tertiary'], ['disabled','--color-text-disabled'],
+    ];
+    return (
+      <section id="colors" className="sb-section">
+        <h2>Colors</h2>
+        <p>OKLCH-tuned. Light + dark themes share the same variable names — components don't know which theme is active.</p>
+        <h3>Primary scale (CTA · midnight indigo)</h3>
+        <div className="sb-grid-3">{primary.map(([n,v]) => <Swatch key={n} name={n} varName={v} />)}</div>
+        <h3>Semantic</h3>
+        <div className="sb-grid-3">{semantic.map(([n,v]) => <Swatch key={n} name={n} varName={v} />)}</div>
+        <h3>Surfaces</h3>
+        <div className="sb-grid-3">{surface.map(([n,v]) => <Swatch key={n} name={n} varName={v} />)}</div>
+        <h3>Text</h3>
+        <div className="sb-grid-3">{text.map(([n,v]) => (
+          <div key={n} className="demo-card" style={{display:'flex',alignItems:'center',gap:12}}>
+            <div style={{width:32,height:32,borderRadius:8,background:`var(${v})`}} />
+            <div>
+              <div style={{fontWeight:500}}>The quick brown fox</div>
+              <code style={{fontSize:'var(--font-size-xs)',color:'var(--color-text-tertiary)',fontFamily:'var(--font-family-mono)'}}>{v}</code>
+            </div>
+          </div>
+        ))}</div>
+      </section>
+    );
+  }
+
+  /* ─── Type ─────────────────────────────────────────── */
+  function TypeSection() {
+    const sizes = [
+      ['xs', 12], ['sm', 13], ['md', 14], ['lg', 16], ['xl', 18],
+      ['2xl', 22], ['3xl', 28], ['4xl', 36], ['5xl', 48],
+    ];
+    return (
+      <section id="type" className="sb-section">
+        <h2>Typography</h2>
+        <p>Geist sans + Geist Mono. 9 sizes. 4 weights. 4 line-heights.</p>
+        <div className="demo-card">
+          {sizes.map(([n, px]) => (
+            <div key={n} className="type-row">
+              <span className="name">font-size-{n}</span>
+              <span style={{fontSize:`var(--font-size-${n})`, fontWeight:500, lineHeight:1.2}}>The quick brown fox</span>
+              <span style={{color:'var(--color-text-tertiary)', fontSize:'var(--font-size-sm)'}}>{px}px</span>
+            </div>
+          ))}
+        </div>
+        <h3>Weights</h3>
+        <div className="sb-row">
+          {['regular','medium','semibold','bold'].map(w => (
+            <div key={w} className="demo-card" style={{padding:'12px 16px', minWidth:160}}>
+              <div style={{fontWeight:`var(--font-weight-${w})`,fontSize:'var(--font-size-lg)'}}>Aa Bb Cc</div>
+              <code style={{fontSize:'var(--font-size-xs)',color:'var(--color-text-tertiary)',fontFamily:'var(--font-family-mono)'}}>{w}</code>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  /* ─── Spacing & Radius ────────────────────────────── */
+  function SpacingSection() {
+    const space = [1,2,3,4,5,6,8,10,12,16,20];
+    const radii = ['sm','md','lg','xl','2xl','full'];
+    return (
+      <section id="spacing" className="sb-section">
+        <h2>Spacing & Radius</h2>
+        <p>4px grid. Numeric tokens equal value in 4px units (<code>--space-4</code> = 16px).</p>
+        <h3>Spacing scale</h3>
+        <div className="demo-card">
+          {space.map(n => (
+            <div key={n} style={{display:'grid',gridTemplateColumns:'120px 1fr',gap:16,alignItems:'center',padding:'4px 0'}}>
+              <code style={{fontFamily:'var(--font-family-mono)',fontSize:'var(--font-size-xs)',color:'var(--color-text-secondary)'}}>--space-{n}</code>
+              <div style={{height:14,width:`var(--space-${n})`, background:'var(--color-primary-700)', borderRadius:2}} />
+            </div>
+          ))}
+        </div>
+        <h3>Radius</h3>
+        <div className="sb-row">
+          {radii.map(r => (
+            <div key={r} className="demo-card" style={{padding:'8px 12px', display:'flex', flexDirection:'column', gap:6, alignItems:'center'}}>
+              <div style={{width:48,height:48,background:'var(--color-primary-700)',borderRadius:`var(--radius-${r})`}} />
+              <code style={{fontFamily:'var(--font-family-mono)',fontSize:'var(--font-size-xs)',color:'var(--color-text-tertiary)'}}>{r}</code>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  /* ─── Shadow ───────────────────────────────────────── */
+  function ShadowSection() {
+    return (
+      <section id="shadow" className="sb-section">
+        <h2>Shadow & Elevation</h2>
+        <p>5 levels of elevation, plus a dedicated CTA shadow and focus ring.</p>
+        <div className="sb-row" style={{gap:24,padding:'16px 4px'}}>
+          {[1,2,3,4,5].map(n => (
+            <div key={n} style={{width:120,height:80,background:'var(--color-bg-2)',borderRadius:'var(--radius-lg)',
+              boxShadow:`var(--shadow-${n})`,display:'flex',alignItems:'center',justifyContent:'center',
+              fontSize:'var(--font-size-sm)',color:'var(--color-text-secondary)'}}>shadow-{n}</div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  /* ─── Button ──────────────────────────────────────── */
+  function ButtonSection() {
+    const [loading, setLoading] = useState(false);
+    return (
+      <section id="button" className="sb-section">
+        <h2>Button</h2>
+        <p>5 variants × 3 sizes. Primary uses the midnight-indigo CTA treatment with inset highlight + 0.5px edge.</p>
+        <div className="demo-card">
+          <div className="demo-grid">
+            <div className="label">Primary</div>
+            <div className="sb-row">
+              <Button variant="primary" size="sm">Save</Button>
+              <Button variant="primary" size="md">Save changes</Button>
+              <Button variant="primary" size="lg">Save changes</Button>
+              <Button variant="primary" loading={loading} onClick={() => { setLoading(true); setTimeout(() => setLoading(false), 1200); }}>{loading ? 'Saving' : 'Try loading'}</Button>
+              <Button variant="primary" disabled>Disabled</Button>
+            </div>
+            <div className="label">Secondary</div>
+            <div className="sb-row">
+              <Button size="sm">Cancel</Button>
+              <Button size="md">Cancel</Button>
+              <Button size="lg">Cancel</Button>
+              <Button disabled>Disabled</Button>
+            </div>
+            <div className="label">Ghost</div>
+            <div className="sb-row">
+              <Button variant="ghost" size="sm">More</Button>
+              <Button variant="ghost">More options</Button>
+              <Button variant="ghost" size="lg">More options</Button>
+            </div>
+            <div className="label">Danger</div>
+            <div className="sb-row">
+              <Button variant="danger" size="sm">Delete</Button>
+              <Button variant="danger">Delete terminal</Button>
+              <Button variant="danger" size="lg">Factory reset</Button>
+            </div>
+            <div className="label">Link</div>
+            <div className="sb-row">
+              <Button variant="link">View documentation →</Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  /* ─── Form ─────────────────────────────────────────── */
+  function FormSection() {
+    const [v, setV] = useState('');
+    const [plan, setPlan] = useState('pro');
+    const [pick, setPick] = useState('a');
+    const [chk, setChk] = useState(true);
+    const [sw, setSw] = useState(true);
+    return (
+      <section id="form" className="sb-section">
+        <h2>Form</h2>
+        <p>Field wraps any control with label, hint, and inline error. Sizes: sm / md / lg.</p>
+        <div className="sb-grid-2">
+          <div className="demo-card">
+            <h3 style={{margin:'0 0 12px'}}>Inputs</h3>
+            <div style={{display:'flex',flexDirection:'column',gap:16}}>
+              <Field label="Device name" hint="Up to 32 characters" required htmlFor="dn">
+                <Input id="dn" placeholder="TOMS-A29-04" value={v} onChange={(e) => setV(e.target.value)} />
+              </Field>
+              <Field label="API key" hint="Used for OTA pushes">
+                <Input type="password" defaultValue="sk-live-xxxxxxxxxxxxxxxxxx" />
+              </Field>
+              <Field label="Search" >
+                <Input placeholder="Search terminals…" prefix={<span style={{fontSize:14}}>⌕</span>} />
+              </Field>
+              <Field label="Email" error="A valid email is required">
+                <Input type="email" invalid placeholder="you@toms.io" />
+              </Field>
+              <Field label="Disabled">
+                <Input disabled defaultValue="Cannot edit" />
+              </Field>
+            </div>
+          </div>
+          <div className="demo-card">
+            <h3 style={{margin:'0 0 12px'}}>Selections</h3>
+            <div style={{display:'flex',flexDirection:'column',gap:16}}>
+              <Field label="Plan" required>
+                <Select value={plan} onChange={setPlan} options={[
+                  {label:'Basic', value:'basic'}, {label:'Pro', value:'pro'},
+                  {label:'Enterprise', value:'ent'}, {label:'Legacy', value:'legacy', disabled:true}]} />
+              </Field>
+
+              <div>
+                <div className="tds-field__label">Update channel</div>
+                <div className="sb-row" style={{marginTop:6}}>
+                  <Radio name="ch" value="a" checked={pick==='a'} onChange={() => setPick('a')} label="Stable" />
+                  <Radio name="ch" value="b" checked={pick==='b'} onChange={() => setPick('b')} label="Beta" />
+                  <Radio name="ch" value="c" checked={pick==='c'} onChange={() => setPick('c')} label="Canary" />
+                </div>
+              </div>
+
+              <div>
+                <div className="tds-field__label">Permissions</div>
+                <div className="sb-row" style={{marginTop:6, gap:16}}>
+                  <Checkbox label="Read" checked={chk} onChange={(e) => setChk(e.target.checked)} />
+                  <Checkbox label="Write" defaultChecked />
+                  <Checkbox label="Admin" indeterminate />
+                  <Checkbox label="Disabled" disabled />
+                </div>
+              </div>
+
+              <div className="sb-row" style={{justifyContent:'space-between'}}>
+                <div>
+                  <div style={{fontWeight:500}}>Auto-update</div>
+                  <div style={{fontSize:'var(--font-size-xs)',color:'var(--color-text-tertiary)'}}>Apply firmware on idle</div>
+                </div>
+                <Switch checked={sw} onChange={setSw} aria-label="Auto-update" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  /* ─── Data display ─────────────────────────────────── */
+  function DataSection() {
+    const [tab, setTab] = useState('online');
+    const [page, setPage] = useState(3);
+    const [sort, setSort] = useState({ key: 'name', dir: 'asc' });
+    const allRows = React.useMemo(() => [
+      { id:1, name:'TOMS-A29-04', plan:'Pro', status:'online' },
+      { id:2, name:'TOMS-B12-19', plan:'Basic', status:'offline' },
+      { id:3, name:'TOMS-C04-02', plan:'Enterprise', status:'online' },
+      { id:4, name:'TOMS-D88-77', plan:'Pro', status:'warning' },
+      { id:5, name:'TOMS-E33-10', plan:'Basic', status:'offline' },
+    ], []);
+    const rows = React.useMemo(() => {
+      const sorted = [...allRows].sort((a,b) => String(a[sort.key]).localeCompare(String(b[sort.key])));
+      return sort.dir === 'desc' ? sorted.reverse() : sorted;
+    }, [allRows, sort]);
+    const tone = (s) => s === 'online' ? 'success' : s === 'offline' ? 'neutral' : 'warning';
+    return (
+      <section id="data" className="sb-section">
+        <h2>Data display</h2>
+        <p>Tabs · Badge · Table (sortable, sticky header) · Pagination.</p>
+        <div className="demo-card" style={{padding:0, overflow:'hidden'}}>
+          <div style={{padding:'12px 20px', borderBottom:'1px solid var(--color-border-subtle)'}}>
+            <Tabs value={tab} onChange={setTab} items={[
+              {key:'online', label:'Online'}, {key:'offline', label:'Offline'},
+              {key:'all', label:'All'}, {key:'archived', label:'Archived', disabled:true},
+            ]} />
+          </div>
+          <Table
+            rowKey={(r) => r.id}
+            sort={sort} onSortChange={(s) => setSort(s ?? { key: 'name', dir: 'asc' })}
+            columns={[
+              { key:'name', title:'Name', field:'name', sortable:true },
+              { key:'plan', title:'Plan', field:'plan', sortable:true, width:120 },
+              { key:'status', title:'Status', sortable:true, align:'center', width:120,
+                render:(r) => <Badge tone={tone(r.status)}>{r.status}</Badge> },
+              { key:'act', title:'', align:'right', width:120,
+                render:() => <Button variant="ghost" size="sm">Manage</Button> },
+            ]}
+            rows={rows}
+          />
+          <div style={{padding:'12px 20px', borderTop:'1px solid var(--color-border-subtle)',
+                       display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <span style={{fontSize:'var(--font-size-xs)',color:'var(--color-text-tertiary)'}}>5 of 138 terminals</span>
+            <Pagination page={page} pageCount={20} onChange={setPage} />
+          </div>
+        </div>
+
+        <h3>Cards & badges</h3>
+        <div className="sb-grid-2">
+          <Card title="Battery" actions={<Button variant="ghost" size="sm">Refresh</Button>}>
+            <div style={{fontSize:'var(--font-size-3xl)',fontWeight:600,letterSpacing:'-0.02em'}}>87%</div>
+            <div style={{color:'var(--color-text-tertiary)',fontSize:'var(--font-size-xs)'}}>Estimated 4h 12m left</div>
+          </Card>
+          <Card title="Signal" actions={<Badge tone="success">Strong</Badge>}>
+            <div className="sb-row" style={{gap:8}}>
+              <Badge tone="info">LTE</Badge>
+              <Badge tone="success">Online</Badge>
+              <Badge tone="warning">Roaming</Badge>
+              <Badge tone="error">Throttled</Badge>
+              <Badge tone="neutral">N/A</Badge>
+            </div>
+          </Card>
+        </div>
+      </section>
+    );
+  }
+
+  /* ─── Feedback ─────────────────────────────────────── */
+  function FeedbackSection() {
+    const [open, setOpen] = useState(false);
+    const { push } = useToast();
+    return (
+      <section id="feedback" className="sb-section">
+        <h2>Feedback</h2>
+        <p>Modal (esc + overlay), Toast (provider + hook), Tooltip (hover/focus).</p>
+        <div className="demo-card">
+          <div className="sb-row">
+            <Button variant="primary" onClick={() => setOpen(true)}>Open modal</Button>
+            <Button onClick={() => push({tone:'success',title:'Saved',message:'Applied to 3 terminals'})}>Toast · success</Button>
+            <Button onClick={() => push({tone:'error',title:'Push failed',message:'Network unreachable'})}>Toast · error</Button>
+            <Button onClick={() => push({tone:'warning',title:'Battery low',message:'Connect within 10 min'})}>Toast · warning</Button>
+            <Button onClick={() => push({tone:'info',title:'New firmware',message:'v2.4.1 available'})}>Toast · info</Button>
+            <Tooltip content="Last sync 2 min ago"><Button variant="ghost">Hover me</Button></Tooltip>
+          </div>
+        </div>
+        <Modal open={open} onClose={() => setOpen(false)} title="Restart device" width={440}
+          footer={<>
+            <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button variant="danger" onClick={() => { setOpen(false); push({tone:'success',title:'Restart queued',message:'Device will reboot shortly'}); }}>Restart</Button>
+          </>}>
+          <p style={{margin:0,color:'var(--color-text-secondary)'}}>Restarting <strong style={{color:'var(--color-text-primary)'}}>TOMS-A29-04</strong> will disconnect 3 active sessions. Continue?</p>
+        </Modal>
+      </section>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>

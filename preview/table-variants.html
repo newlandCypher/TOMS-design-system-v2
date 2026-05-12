@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../styles/components.css">
+<style>
+  body { padding: 0; }
+  .card { width: 700px; gap: 18px; }
+  .row-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px; color: var(--fg3);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  /* Wrapper around each table example */
+  .tbl-wrap {
+    border: 1px solid var(--border-1);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+
+  /* shared cell rhythm */
+  table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12px; color: var(--fg1); }
+  thead th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 10px; color: var(--fg3);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 8px 12px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border-1);
+    font-family: var(--font-mono);
+  }
+  tbody td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-1);
+    color: var(--fg2);
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.r, th.r { text-align: right; }
+  .mono { font-family: var(--font-mono); color: var(--fg1); }
+  .id   { font-family: var(--font-mono); color: var(--fg1); font-size: 11.5px; }
+
+  /* Variant: striped */
+  .v-striped tbody tr:nth-child(odd) td { background: var(--bg1); }
+
+  /* Variant: dense */
+  .v-dense thead th { padding: 6px 10px; font-size: 9.5px; }
+  .v-dense tbody td { padding: 5px 10px; font-size: 11.5px; }
+
+  /* Variant: bordered (vertical separators) */
+  .v-bordered td + td,
+  .v-bordered th + th { border-left: 1px solid var(--border-1); }
+
+  /* Variant: hover row */
+  .v-hover tbody tr:hover td { background: var(--bg-hover); cursor: pointer; }
+  .v-hover tbody tr.selected td { background: var(--accent-soft); }
+
+  /* Variant: with footer total */
+  .v-total tfoot td {
+    background: var(--bg3);
+    border-top: 1px solid var(--border-2);
+    font-weight: 500;
+    color: var(--fg1);
+    padding: 8px 12px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+  }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 1px 6px; border-radius: 999px;
+    font-family: var(--font-mono); font-size: 10px;
+  }
+  .pill::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor;
+  }
+  .pill.ok    { color: var(--success); background: var(--success-bg); }
+  .pill.warn  { color: var(--warning); background: var(--warning-bg); }
+  .pill.err   { color: var(--error);   background: var(--error-bg); }
+
+  .checkbox {
+    width: 13px; height: 13px;
+    border: 1px solid var(--border-2); border-radius: 3px;
+    background: var(--bg2); display: inline-block; vertical-align: middle;
+  }
+  .checkbox.on {
+    background: var(--accent); border-color: var(--accent);
+    position: relative;
+  }
+  .checkbox.on::after {
+    content: ''; position: absolute; left: 3px; top: 1px;
+    width: 4px; height: 7px;
+    border: solid #fff; border-width: 0 1.5px 1.5px 0;
+    transform: rotate(45deg);
+  }
+
+  /* Action column */
+  th.act, td.act { text-align: right; width: 1%; white-space: nowrap; padding-right: 10px; }
+  .act-row { display: inline-flex; gap: 2px; }
+  .iconbtn {
+    width: 24px; height: 24px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 0; border-radius: 4px;
+    background: transparent; color: var(--fg3);
+    cursor: pointer;
+  }
+  .iconbtn:hover { background: var(--bg-hover); color: var(--fg1); }
+  .iconbtn.danger:hover { color: var(--error); background: var(--error-bg); }
+  .iconbtn svg { width: 13px; height: 13px; }
+  .link-btn {
+    height: 22px; padding: 0 8px;
+    border: 1px solid var(--border-2); border-radius: 4px;
+    background: var(--bg2); color: var(--fg2);
+    font-family: var(--font-sans); font-size: 11px;
+    cursor: pointer;
+  }
+  .link-btn:hover { color: var(--fg1); border-color: var(--border-3); }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- Default + striped + hover/selected -->
+  <div>
+    <div class="row-label">Default · striped · hover state</div>
+    <div class="tbl-wrap">
+      <table class="v-striped v-hover">
+        <thead>
+          <tr>
+            <th style="width:24px"></th>
+            <th>Terminal</th>
+            <th>Vendor</th>
+            <th>Last seen</th>
+            <th class="r">Battery</th>
+            <th>Status</th>
+            <th class="act"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="checkbox"></span></td>
+            <td><span class="id">NL750-K9F2H7B3</span></td>
+            <td>Newland N910</td>
+            <td class="mono" style="color:var(--fg2);font-size:11px">12s ago</td>
+            <td class="r mono">86%</td>
+            <td><span class="pill ok">Online</span></td>
+            <td class="act"><div class="act-row"><button class="iconbtn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"/></svg></button><button class="iconbtn" title="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div></td>
+          </tr>
+          <tr class="selected">
+            <td><span class="checkbox on"></span></td>
+            <td><span class="id">VF684-92C0EE2A</span></td>
+            <td>Verifone V240m</td>
+            <td class="mono" style="color:var(--fg2);font-size:11px">3m ago</td>
+            <td class="r mono">42%</td>
+            <td><span class="pill warn">Update</span></td>
+            <td class="act"><div class="act-row"><button class="link-btn" style="color:var(--accent);border-color:var(--accent)">Update</button><button class="iconbtn" title="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div></td>
+          </tr>
+          <tr>
+            <td><span class="checkbox"></span></td>
+            <td><span class="id">NL750-7D11AAB2</span></td>
+            <td>Newland N910</td>
+            <td class="mono" style="color:var(--fg2);font-size:11px">2h ago</td>
+            <td class="r mono">8%</td>
+            <td><span class="pill err">Offline</span></td>
+            <td class="act"><div class="act-row"><button class="iconbtn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"/></svg></button><button class="iconbtn danger" title="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6 17.5 20a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2L5 6"/></svg></button></div></td>
+          </tr>
+          <tr>
+            <td><span class="checkbox"></span></td>
+            <td><span class="id">PX320-F1E0B842</span></td>
+            <td>PAX A920</td>
+            <td class="mono" style="color:var(--fg2);font-size:11px">just now</td>
+            <td class="r mono">94%</td>
+            <td><span class="pill ok">Online</span></td>
+            <td class="act"><div class="act-row"><button class="iconbtn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"/></svg></button><button class="iconbtn" title="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Dense + bordered + total -->
+  <div>
+    <div class="row-label">Dense · bordered · footer total</div>
+    <div class="tbl-wrap">
+      <table class="v-dense v-bordered v-total">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Merchant</th>
+            <th class="r">Volume</th>
+            <th class="r">Approved</th>
+            <th class="r">Decline %</th>
+            <th class="r">Net</th>
+            <th class="act"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono" style="font-size:11px">May 02</td>
+            <td>Brew & Co — Toronto</td>
+            <td class="r mono">$12,480</td>
+            <td class="r mono">98.4%</td>
+            <td class="r mono" style="color:var(--warning)">1.6%</td>
+            <td class="r mono">$12,280</td>
+            <td class="act"><button class="iconbtn" title="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></td>
+          </tr>
+          <tr>
+            <td class="mono" style="font-size:11px">May 03</td>
+            <td>Brew & Co — Vancouver</td>
+            <td class="r mono">$8,120</td>
+            <td class="r mono">99.1%</td>
+            <td class="r mono" style="color:var(--success)">0.9%</td>
+            <td class="r mono">$8,047</td>
+            <td class="act"><button class="iconbtn" title="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></td>
+          </tr>
+          <tr>
+            <td class="mono" style="font-size:11px">May 04</td>
+            <td>Brew & Co — Montréal</td>
+            <td class="r mono">$5,640</td>
+            <td class="r mono">97.2%</td>
+            <td class="r mono" style="color:var(--warning)">2.8%</td>
+            <td class="r mono">$5,482</td>
+            <td class="act"><button class="iconbtn" title="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></td>
+          </tr>
+          <tr>
+            <td class="mono" style="font-size:11px">May 05</td>
+            <td>Brew & Co — Calgary</td>
+            <td class="r mono">$3,310</td>
+            <td class="r mono">99.8%</td>
+            <td class="r mono" style="color:var(--success)">0.2%</td>
+            <td class="r mono">$3,303</td>
+            <td class="act"><button class="iconbtn" title="More"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></button></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">Total · 4 stores</td>
+            <td class="r">$29,550</td>
+            <td class="r" style="color:var(--fg3)">—</td>
+            <td class="r mono" style="color:var(--fg3)">1.4%</td>
+            <td class="r" style="color:var(--accent)">$29,112</td>
+            <td class="act"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

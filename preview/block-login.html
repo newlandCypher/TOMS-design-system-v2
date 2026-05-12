@@ -1,0 +1,327 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="_card.css">
+<link rel="stylesheet" href="../styles/components.css">
+<style>
+  body { padding: 0; }
+  .card { width: 700px; padding: 0; gap: 0; }
+  .shell {
+    display: flex;
+    background: var(--bg1);
+    border: 1px solid var(--border-1);
+    border-radius: 10px;
+    overflow: hidden;
+    height: 480px;
+  }
+  /* ── Left: form ─────────────────────────────────── */
+  .pane-form {
+    flex: 1.05;
+    background: var(--bg1);
+    display: flex;
+    flex-direction: column;
+    padding: 28px 36px;
+    min-width: 0;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .brand img { width: 22px; height: 22px; object-fit: contain; }
+  .brand-name {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: var(--fg1);
+  }
+  .form-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .heading h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 0;
+    color: var(--fg1);
+  }
+  .heading p {
+    font-size: 12.5px;
+    color: var(--fg3);
+    margin: 5px 0 0;
+  }
+  .oauth { display: flex; flex-direction: column; gap: 8px; }
+  .oauth-btn {
+    height: 38px;
+    border: 1px solid var(--border-2);
+    border-radius: 6px;
+    background: var(--bg1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--fg1);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .oauth-btn:hover { background: var(--bg2); }
+  .oauth-btn svg { width: 15px; height: 15px; flex: none; }
+  /* divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--fg3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 2px 0;
+  }
+  .divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-1);
+  }
+  /* fields */
+  .fld { display: flex; flex-direction: column; gap: 5px; }
+  .fld label {
+    font-size: 11px;
+    color: var(--fg2);
+    font-weight: 500;
+  }
+  .fld .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .fld input {
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid var(--border-2);
+    border-radius: 5px;
+    background: var(--bg1);
+    font-size: 12.5px;
+    color: var(--fg1);
+    font-family: var(--font-sans);
+    outline: none;
+  }
+  .fld input:focus { border-color: var(--fg2); }
+  .forgot {
+    font-size: 10.5px;
+    color: var(--fg2);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .submit {
+    height: 36px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--color-brand-mono);
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 500;
+    margin-top: 4px;
+    cursor: pointer;
+    box-shadow: var(--shadow-cta);
+  }
+  .switch-line {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--fg3);
+    margin-top: 2px;
+  }
+  .switch-line a {
+    color: var(--fg1);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 500;
+  }
+  .legal {
+    text-align: center;
+    font-size: 10px;
+    color: var(--fg3);
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+  .legal a { color: var(--fg2); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ── Right: testimonial ─────────────────────────── */
+  .pane-quote {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: var(--color-brand-mono);
+    color: #fff;
+  }
+  .pane-quote::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 10%, rgba(255,255,255,0.08), transparent 60%),
+      radial-gradient(ellipse 70% 60% at 20% 95%, rgba(99,102,241,0.18), transparent 60%),
+      linear-gradient(135deg, var(--color-brand-mono) 0%, oklch(32% 0.05 268) 100%);
+  }
+  /* faint grid */
+  .pane-quote::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-position: -1px -1px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 0%, transparent 75%);
+  }
+  .quote-inner {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+  }
+  .pane-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pane-mark img { width: 16px; height: 16px; object-fit: contain; filter: brightness(0) invert(1); }
+  .quote-spacer { flex: 1; }
+  .quote-mark {
+    font-family: 'Times New Roman', serif;
+    font-size: 64px;
+    line-height: 0.6;
+    color: rgba(255,255,255,0.18);
+    margin-bottom: 8px;
+  }
+  .quote-text {
+    font-size: 16.5px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: rgba(255,255,255,0.96);
+  }
+  .quote-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c4b5fd, #818cf8);
+    color: #1e1b4b;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+  }
+  .quote-who {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #fff;
+  }
+  .quote-role {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="shell">
+
+    <!-- ─── form pane ──────────────────────────── -->
+    <div class="pane-form">
+      <div class="brand">
+        <img src="toms-logo.png" alt="TOMS">
+        <div class="brand-name">TOMS</div>
+      </div>
+
+      <div class="form-body">
+        <div class="heading">
+          <h1>Welcome back</h1>
+          <p>Sign in to manage your terminal fleet</p>
+        </div>
+
+        <div class="oauth">
+          <button class="oauth-btn" type="button">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.802.06 4.207 2.13-.118.072-2.444 1.42-2.444 4.34 0 3.49 3.13 4.73 3.18 4.76z"/></svg>
+            <span>Continue with Apple</span>
+          </button>
+          <button class="oauth-btn" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            <span>Continue with Google</span>
+          </button>
+        </div>
+
+        <div class="divider">or continue with email</div>
+
+        <div class="fld">
+          <label>Email</label>
+          <input type="email" value="elena@acmecoffee.com">
+        </div>
+        <div class="fld">
+          <div class="row">
+            <label>Password</label>
+            <a class="forgot" href="#">Forgot?</a>
+          </div>
+          <input type="password" value="••••••••">
+        </div>
+
+        <button class="submit" type="button">Sign in</button>
+
+        <div class="switch-line">Don't have an account? <a href="#">Sign up</a></div>
+      </div>
+    </div>
+
+    <!-- ─── testimonial pane ───────────────────── -->
+    <div class="pane-quote">
+      <div class="quote-inner">
+        <div class="pane-mark">
+          <img src="toms-logo.png" alt="TOMS">
+        </div>
+        <div class="quote-spacer"></div>
+        <div class="quote-mark">"</div>
+        <div class="quote-text">Pushed firmware to 348 terminals last week with zero downtime — TOMS just makes ops boring.</div>
+        <div class="quote-meta">
+          <div class="avatar">EC</div>
+          <div>
+            <div class="quote-who">Elena Costa</div>
+            <div class="quote-role">VP Operations · Acme Coffee</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

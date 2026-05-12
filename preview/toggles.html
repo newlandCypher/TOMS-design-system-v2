@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="_card.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <style>
+    .group { display: flex; flex-direction: column; gap: 10px; }
+    .group__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg3);
+    }
+    .group__row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+    .switch-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 12px;
+      border-radius: var(--radius-md);
+      background: var(--bg2);
+      border: 1px solid var(--border-1);
+    }
+    .switch-row__lead { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .switch-row__title { font-size: 13px; color: var(--fg1); font-weight: 500; }
+    .switch-row__meta  { font-size: 11px; color: var(--fg3); font-family: var(--font-mono); }
+    .stack-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .indeterminate {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 16px; height: 16px; border-radius: var(--radius-sm);
+      background: var(--accent); border: 1px solid var(--accent);
+    }
+    .indeterminate::after {
+      content: ""; width: 8px; height: 2px; background: #fff; border-radius: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <div class="group">
+      <div class="group__label">Checkbox</div>
+      <div class="group__row">
+        <label class="tds-checkbox">
+          <input type="checkbox" checked>
+          <span class="tds-checkbox__box">
+            <svg class="tds-checkbox__check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 6.5 5 9l4.5-5"/></svg>
+          </span>
+          Auto-update firmware
+        </label>
+        <label class="tds-checkbox">
+          <input type="checkbox">
+          <span class="tds-checkbox__box"></span>
+          Reboot weekly
+        </label>
+        <label class="tds-checkbox">
+          <span class="indeterminate"></span>
+          27 of 42 selected
+        </label>
+        <label class="tds-checkbox" style="opacity:.5">
+          <input type="checkbox" disabled>
+          <span class="tds-checkbox__box"></span>
+          Locked by policy
+        </label>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group__label">Radio · environment</div>
+      <div class="group__row">
+        <label class="tds-radio">
+          <input type="radio" name="env" checked>
+          <span class="tds-radio__box"><span class="tds-radio__dot"></span></span>
+          Production
+        </label>
+        <label class="tds-radio">
+          <input type="radio" name="env">
+          <span class="tds-radio__box"><span class="tds-radio__dot"></span></span>
+          Staging
+        </label>
+        <label class="tds-radio">
+          <input type="radio" name="env">
+          <span class="tds-radio__box"><span class="tds-radio__dot"></span></span>
+          Sandbox
+        </label>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="group__label">Switch · radios at NL750-K9F2H7B3</div>
+      <div class="stack-2">
+        <div class="switch-row">
+          <div class="switch-row__lead">
+            <span class="tds-switch tds-switch--on"></span>
+            <span class="switch-row__title">Cellular</span>
+          </div>
+          <span class="switch-row__meta">LTE · −67 dBm</span>
+        </div>
+        <div class="switch-row">
+          <div class="switch-row__lead">
+            <span class="tds-switch tds-switch--on"></span>
+            <span class="switch-row__title">Wi-Fi</span>
+          </div>
+          <span class="switch-row__meta">5 GHz · office-5g</span>
+        </div>
+        <div class="switch-row">
+          <div class="switch-row__lead">
+            <span class="tds-switch"></span>
+            <span class="switch-row__title">VPN</span>
+          </div>
+          <span class="switch-row__meta">off</span>
+        </div>
+        <div class="switch-row" style="opacity:.55">
+          <div class="switch-row__lead">
+            <span class="tds-switch"></span>
+            <span class="switch-row__title">GPS</span>
+          </div>
+          <span class="switch-row__meta">unsupported</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
